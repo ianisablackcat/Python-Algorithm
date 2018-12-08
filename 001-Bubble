@@ -1,0 +1,12 @@
+numList = [12, 35, 99, 18, 76, 53, 7, 41, 3, 28, 89]
+
+i = True
+while i:
+    i = False
+    for j in numList[:len(numList)-1]:
+        #print(numList[numList.index(j)], numList[numList.index(j)+1])
+        if j < numList[numList.index(j)+1]:
+            numList[numList.index(j)+1], numList[numList.index(j)] = numList[numList.index(j)], numList[numList.index(j)+1]
+            i = True
+    
+print(numList)
