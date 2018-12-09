@@ -1,0 +1,51 @@
+numList = [[6, 1, 2, 7, 9, 3, 4, 5, 10, 8]]
+
+def fast_sort(posLab):
+    tempList = numList[posLab]
+    m = tempList[(len(tempList)//2)]
+    print('m=', m)
+    
+    for i in tempList:
+        if i <= m:
+            print('i=', i)
+            for j in reversed(tempList[tempList.index(i):]):
+                if j >= m:
+                    print('j=', j)
+                    a = tempList.index(i)
+                    b = tempList.index(j)                        
+                    tempList[a], tempList[b] = tempList[b], tempList[a]                        
+                    break
+                        
+    return tempList.index(m)
+
+
+
+def divide_write(posLab, numPos):    
+    temp = numList[posLab][numPos:]
+    numList[posLab] = numList[posLab][:numPos]
+    numList.insert(posLab+1, temp)
+    
+
+
+k = 0
+while True:
+    if len(numList[k]) > 1:
+        divide_write(k, fast_sort(k))
+        continue
+    
+    elif len(numList[k]) <= 1:
+        k = k+1
+        if k >= len(numList):
+            break
+        
+        continue
+
+
+ans = []
+for t in numList:
+    if len(t) > 0:
+        ans.append(t[0])
+        
+        
+
+print(ans)
