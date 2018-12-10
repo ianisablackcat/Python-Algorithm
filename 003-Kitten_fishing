@@ -1,0 +1,79 @@
+"""隨機均分牌，每人依序出一張牌，與桌上的牌中有相同的就可以拿走兩張中間所有的牌，最後手中沒牌的就輸了。"""
+import random
+
+basePool = ['S-01', 'S-02', 'S-03', 'S-04', 'S-05', 'S-06', 'S-07', 'S-08', 'S-09', 'S-10', 'S-11', 'S-12', 'S-13',
+            'H-01', 'H-02', 'H-03', 'H-04', 'H-05', 'H-06', 'H-07', 'H-08', 'H-09', 'H-10', 'H-11', 'H-12', 'H-13',
+            'C-01', 'C-02', 'C-03', 'C-04', 'C-05', 'C-06', 'C-07', 'C-08', 'C-09', 'C-10', 'C-11', 'C-12', 'C-13',
+            'D-01', 'D-02', 'D-03', 'D-04', 'D-05', 'D-06', 'D-07', 'D-08', 'D-09', 'D-10', 'D-11', 'D-12', 'D-13',
+            'G-00', 'G-00']
+cardPool = []
+no1 = []
+no2 = []
+
+
+
+def shuffle_deal():
+    global basePool
+    global no1
+    global no2
+    
+    temp1 = basePool.copy()
+    temp2 = []
+    while len(temp1) > 0:
+        x = random.randint(0, len(temp1)-1)        
+        temp2.append(temp1[x])
+        temp1.pop(x)
+        
+    no1 = temp2[:27].copy()
+    no2 = temp2[27:].copy()
+
+    return
+
+    
+
+def play_card(round):    
+    global cardPool
+    
+    for r in cardPool:
+        if round[0][2:] == r[2:]:
+            lab = cardPool.index(r)
+            print(round[0], ' Got it!!!')
+            print(cardPool[lab:])
+            for i in cardPool[lab:]:
+                round.append(i)
+            
+            cardPool = cardPool[:lab]
+            round.append(round[0])
+            round.pop(0)            
+            return round
+        
+    print(round[0])
+    cardPool.append(round[0])
+    round.pop(0)
+    return round
+
+
+
+def game_start():
+    global no1
+    global no2
+    
+    while True:
+        print('no1 play: ')
+        no1 = play_card(no1)
+        print('CardPool: ', cardPool)
+        if len(no1) == 0:
+            print('no2 win!!!')
+            break
+        
+        print('no1 play: ')
+        no2 = play_card(no2)
+        print('CardPool: ', cardPool)
+        if len(no2) == 0:
+            print('no1 win!!!')
+            break
+
+
+    
+shuffle_deal()
+game_start()
